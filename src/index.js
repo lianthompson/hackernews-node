@@ -4,20 +4,14 @@ let links = [{
     id: 'link-0',
     url: 'www.hotographql.com',
     description: 'Fullstack tutorial for GrapQL',
-    creator: "The Internet",
-    characters: 473455
 },{
     id: 'link-1',
     url: 'www.lianthompson.me',
     description: 'My website',
-    creator: "The Internet",
-    characters: 455
 },{
     id: 'link-2',
     url: 'www.celebitchy.com',
     description: 'Escapism can be smart',
-    creator: "The Internet",
-    characters: 35
 }]
 
 // 1

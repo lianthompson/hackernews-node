@@ -11,6 +11,4 @@ type Link {
     id: ID!
     description: String!
     url: String!
-    creator: String!
-    characters: Int!
 }
