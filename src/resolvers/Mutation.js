@@ -21,7 +21,7 @@ async function signup(parent, args, context, info) {
     }
   }
   
-  async function login(parent, args, context, info) {
+async function login(parent, args, context, info) {
     // 1
     const user = await context.db.query.user({ where: { email: args.email } }, ` { id password } `)
     if (!user) {
@@ -41,9 +41,9 @@ async function signup(parent, args, context, info) {
       token,
       user,
     }
-  }
+}
   
-  function post(parent, args, context, info) {
+function post(parent, args, context, info) {
     const userId = getUserId(context)
     return context.db.mutation.createLink(
       {
@@ -55,10 +55,36 @@ async function signup(parent, args, context, info) {
       },
       info,
     )
+}
+
+async function vote(parent, args, context, info) {
+  // 1
+  const userId = getUserId(context)
+
+  // 2
+  const linkExists = await context.db.exists.Vote({
+    user: { id: userId },
+    link: { id: args.linkId },
+  })
+  if (linkExists) {
+    throw new Error(`Already voted for link: ${args.linkId}`)
   }
+
+  // 3
+  return context.db.mutation.createVote(
+    {
+      data: {
+        user: { connect: { id: userId } },
+        link: { connect: { id: args.linkId } },
+      },
+    },
+    info,
+  )
+}
 
   module.exports = {
       signup,
       login,
       post,
+      vote,
   }
